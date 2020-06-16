@@ -14,6 +14,7 @@ function MainPage() {
   const [equalAmount, setTypeAmount] = useState(true);
   const [bill, setBill] = useState(0);
   const [persons, setPersons] = useState([]);
+  const [billEach, setBillEach] = useState(0);
 
   // const onSubmit = (e) => {
   //   props.setPersons([...persons, currName]);
@@ -24,19 +25,28 @@ function MainPage() {
   return (
     <div>
       <NavBar />
-      <BillSetter cards={cards} setTypeAmount={setTypeAmount} />
+      <BillSetter
+        cards={cards}
+        setCards={setCards}
+        equalAmount={equalAmount}
+        setTypeAmount={setTypeAmount}
+        setBill={setBill}
+        bill={bill}
+        billEach={billEach}
+        setBillEach={setBillEach}
+      />
       <hr />
       <div className="splitter-cards">
         {cards.map((key) => (
           <Splitter
             persons={persons}
             setPersons={setPersons}
-            currBill={bill}
-            setBill={setBill}
             typeAmount={equalAmount}
             key={key.id_key}
             id={key.id_key}
             card={key}
+            // billEach={billEach}
+            // setBillEach={setBillEach}
           />
         ))}
       </div>

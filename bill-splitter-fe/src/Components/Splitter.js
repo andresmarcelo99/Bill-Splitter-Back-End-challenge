@@ -32,16 +32,6 @@ function Splitter(props) {
           />
         </Form.Group>
 
-        {/* <Form.Group className="splitter-form-group" controlId="formBasicQty">
-          <Form.Label className="splitter-labels">How many?</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Add the number of people"
-            name="qty"
-            onChange={(e) => setQty(e.target.value)}
-          />
-        </Form.Group> */}
-
         {!props.typeAmount && (
           <Form.Group className="splitter-form-group" controlId="formBasicTip">
             <Form.Label className="splitter-labels">Amount</Form.Label>
