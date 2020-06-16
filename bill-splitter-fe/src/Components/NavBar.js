@@ -1,7 +1,11 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
+
+import { useAuth0 } from "../react-auth0-spa";
 
 function NavBar() {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   return (
     <div>
       <Navbar
@@ -13,7 +17,7 @@ function NavBar() {
         <Navbar.Brand
           className="nav-bar-brand"
           style={{ color: "#F64C72", fontWeight: "500" }}
-          href="#home"
+          href="/"
         >
           Bill Splitter
         </Navbar.Brand>
@@ -21,9 +25,33 @@ function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <Nav.Link href="#deets">Splits</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Log
+            <Nav.Link href="/test">
+              <Button variant="link" className="splits-link-btn">
+                Splits
+              </Button>
+            </Nav.Link>
+            <Nav.Link eventKey={2}>
+              <div>
+                {!isAuthenticated && (
+                  <Button
+                    variant="link"
+                    className="log-in-btn"
+                    onClick={() => loginWithRedirect({})}
+                  >
+                    Log in
+                  </Button>
+                )}
+
+                {isAuthenticated && (
+                  <Button
+                    variant="link"
+                    className="log-in-btn"
+                    onClick={() => logout()}
+                  >
+                    Log out
+                  </Button>
+                )}
+              </div>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

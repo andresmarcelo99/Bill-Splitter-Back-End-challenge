@@ -10,14 +10,14 @@ function Splitter() {
           <Form.Control type="text" placeholder="Enter bill" />
         </Form.Group>
 
-        <Form.Group controlId="formBasicQty">
+        <Form.Group className="splitter-form-group" controlId="formBasicQty">
           <Form.Label>How many?</Form.Label>
           <Form.Control type="text" placeholder="Add the number of people" />
         </Form.Group>
 
-        <Form.Group controlId="formBasicTip">
+        <Form.Group className="splitter-form-group" controlId="formBasicTip">
           <Form.Label>Optional Tip?</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" placeholder="Tip" />
         </Form.Group>
         <div>
           <Button className="split-btn">Split</Button>

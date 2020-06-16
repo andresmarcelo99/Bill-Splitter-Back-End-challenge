@@ -8,6 +8,24 @@
   font-size: 4vh;
 }
 
+.log-in-btn {
+  padding: 1px;
+  color: white;
+  background: transparent;
+  border: 2px solid #f64c72;
+}
+.splits-link-btn {
+  padding: 2px;
+  color: white;
+  background: #f64c72;
+  border-color: #f64c72;
+}
+
+.splits-link-btn:hover,
+.log-in-btn:hover {
+  color: white;
+}
+
 .splitter-form-div {
   display: flex;
   flex: 1;
@@ -23,8 +41,11 @@
   border: 4px solid #f64c72;
   border-radius: 6px;
 }
-
+.splitter-form-group {
+  margin-top: 2em;
+}
 .split-btn {
+  margin-top: 1em;
   background: rgb(246, 76, 114);
   background: linear-gradient(
     90deg,
@@ -39,7 +60,6 @@
 
 @media only screen and (max-width: 768px) {
   .splitter-form {
-    background: green;
     margin-top: 5vh;
     min-width: 95%;
     margin-left: auto;
