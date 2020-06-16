@@ -7,16 +7,37 @@ import Splitter from "./Splitter";
 import BillSetter from "./BillSetter";
 
 function MainPage() {
-  const [cards, setCards] = useState([uuidv4()]);
+  const [cards, setCards] = useState([
+    { id_key: uuidv4(), name: "", amount: 0 },
+  ]);
+
+  const [equalAmount, setTypeAmount] = useState(true);
+  const [bill, setBill] = useState(0);
+  const [persons, setPersons] = useState([]);
+
+  // const onSubmit = (e) => {
+  //   props.setPersons([...persons, currName]);
+  //   console.log(props.persons);
+  //   e.preventDefault();
+  // };
 
   return (
     <div>
       <NavBar />
-      <BillSetter />
+      <BillSetter cards={cards} setTypeAmount={setTypeAmount} />
       <hr />
       <div className="splitter-cards">
         {cards.map((key) => (
-          <Splitter key={key} id={key} />
+          <Splitter
+            persons={persons}
+            setPersons={setPersons}
+            currBill={bill}
+            setBill={setBill}
+            typeAmount={equalAmount}
+            key={key.id_key}
+            id={key.id_key}
+            card={key}
+          />
         ))}
       </div>
       <div className="add-btn-div">
@@ -25,7 +46,10 @@ function MainPage() {
           onClick={() => {
             const newKey = uuidv4();
             console.log(cards);
-            return setCards([...cards, newKey]);
+            return setCards([
+              ...cards,
+              { id_key: newKey, name: "", amount: 0 },
+            ]);
           }}
         >
           Add

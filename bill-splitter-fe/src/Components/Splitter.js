@@ -1,32 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Button } from "react-bootstrap";
 
 function Splitter(props) {
-  const [bill, setBill] = useState(0);
-  const [qty, setQty] = useState(0);
-  const [tip, setTip] = useState(0);
-  const [isValid, setValidation] = useState("");
-
-  const handleSubmit = () => {
-    console.log(`bill: ${bill}, qty: ${qty}, tip: ${tip}`);
-    const isNum = /^\d+$/.test(bill + qty + tip);
-    console.log(isNum);
-  };
+  //   const handleDelete = (e) => {
+  //     console.log(e.target.value);
+  //   };
 
   return (
     <div className="splits-div-card">
       <Form className="splitter-form">
+        <span>
+          <Button
+            // type="submit"
+            size="sm"
+            variant="danger"
+            className="delete-btn"
+            // onClick={handleDelete.bind(this,)}
+            onClick={() => console.log(props.card)}
+          >
+            x
+          </Button>
+        </span>
+
         <Form.Group controlId="formBasicCost">
-          <Form.Label className="splitter-labels">Bill</Form.Label>
+          <Form.Label className="splitter-labels">Name</Form.Label>
           <Form.Control
+            onChange={(e) => (props.card.name = e.target.value)}
             type="text"
-            placeholder="Enter bill"
-            name="bill"
-            onChange={(e) => setBill(e.target.value)}
+            placeholder="Enter name"
+            name="name"
           />
         </Form.Group>
 
-        <Form.Group className="splitter-form-group" controlId="formBasicQty">
+        {/* <Form.Group className="splitter-form-group" controlId="formBasicQty">
           <Form.Label className="splitter-labels">How many?</Form.Label>
           <Form.Control
             type="text"
@@ -34,22 +40,23 @@ function Splitter(props) {
             name="qty"
             onChange={(e) => setQty(e.target.value)}
           />
-        </Form.Group>
+        </Form.Group> */}
 
-        <Form.Group className="splitter-form-group" controlId="formBasicTip">
-          <Form.Label className="splitter-labels">Optional Tip?</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Tip"
-            name="tip"
-            onChange={(e) => setTip(e.target.value)}
-          />
-        </Form.Group>
-        <div>
-          <Button className="split-btn" onClick={handleSubmit}>
-            Split
-          </Button>
-        </div>
+        {!props.typeAmount && (
+          <Form.Group className="splitter-form-group" controlId="formBasicTip">
+            <Form.Label className="splitter-labels">Amount</Form.Label>
+            <Form.Control
+              onChange={(e) => {
+                const isNum = /^\d+$/.test(e.target.value);
+                if (isNum)
+                  return (props.card.amount = parseInt(e.target.value));
+              }}
+              type="text"
+              placeholder="Enter amount"
+              name="amount"
+            />
+          </Form.Group>
+        )}
       </Form>
     </div>
   );

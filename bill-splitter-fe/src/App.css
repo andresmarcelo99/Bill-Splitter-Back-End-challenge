@@ -24,6 +24,30 @@
 .bill-setter-div {
 }
 
+.delete-btn {
+  float: right;
+}
+
+.bill-setter-form {
+  margin: 1em auto;
+  width: 70%;
+}
+.amount-settings-checks {
+  width: 50%;
+}
+
+.split-btn {
+  background: rgb(246, 76, 114);
+  background: linear-gradient(
+    90deg,
+    rgba(246, 76, 114, 1) 0%,
+    rgba(246, 170, 76, 1) 100%,
+    rgba(246, 76, 114, 1) 100%
+  );
+  /* padding: 5px 10px; */
+  border: none;
+}
+
 .splitter-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -68,20 +92,6 @@
 .splitter-labels {
   font-size: 3.5vh;
   font-weight: 400;
-}
-
-.split-btn {
-  margin: 1em;
-  background: rgb(246, 76, 114);
-  background: linear-gradient(
-    90deg,
-    rgba(246, 76, 114, 1) 0%,
-    rgba(246, 170, 76, 1) 100%,
-    rgba(246, 76, 114, 1) 100%
-  );
-  padding: 5px 10px;
-  border: none;
-  float: right;
 }
 
 @media only screen and (max-width: 768px) {
