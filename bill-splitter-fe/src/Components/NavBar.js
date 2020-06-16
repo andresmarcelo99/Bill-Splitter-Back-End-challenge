@@ -25,6 +25,9 @@ function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
+            <Nav.Link href="/">New Slate</Nav.Link>
+          </Nav>
+          <Nav>
             <Nav.Link href="/test">
               <Button variant="link" className="splits-link-btn">
                 Splits

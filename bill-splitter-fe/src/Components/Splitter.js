@@ -2,9 +2,11 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 
 function Splitter(props) {
-  //   const handleDelete = (e) => {
-  //     console.log(e.target.value);
-  //   };
+  const handleDelete = (e) => {
+    const curr_id = props.card.id_key;
+    const newCards = [...props.cards.filter((card) => card.id_key !== curr_id)];
+    props.setCards([...newCards]);
+  };
 
   return (
     <div className="splits-div-card">
@@ -15,8 +17,7 @@ function Splitter(props) {
             size="sm"
             variant="danger"
             className="delete-btn"
-            // onClick={handleDelete.bind(this,)}
-            onClick={() => console.log(props.card)}
+            onClick={handleDelete}
           >
             x
           </Button>
