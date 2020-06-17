@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import { useAuth0 } from "../react-auth0-spa";
 import NavBar from "./NavBar";
@@ -16,23 +17,48 @@ function MainPage() {
   const [bill, setBill] = useState(0);
   const [persons, setPersons] = useState([]);
   const [billEach, setBillEach] = useState(0);
-  const [pendingVal, setPendingVal] = useState(0);
-  const [receipt, setReceipt] = useState({});
+  const [pendingVal, setPendingVal] = useState();
+  const [r_isValid, setR_isvalid] = useState(true);
+  const [split, setSplit] = useState(false);
+  const [isValid, setValidation] = useState(true);
 
   const submitSplit = async () => {
     const payload = {
       name: user.nickname,
       email: user.name,
       token: await getTokenSilently(),
-      split: {},
+      split: [],
     };
 
-    console.log(payload);
+    if (!equalAmount) {
+      if (pendingVal > -1 && pendingVal < 1) {
+        let receipt = [...cards].map((card) => ({
+          amount: card.amount,
+          item: card.item,
+          name: card.name,
+        }));
+        payload.split = [...receipt];
+        console.log(payload);
+        return setR_isvalid(true);
+      }
+      console.log("Remaining must be 0");
+      return setR_isvalid(false);
+    } else {
+      if (split && isValid) {
+        let receipt = [...cards].map((card) => ({
+          amount: (bill * 0.15 + bill) / cards.length,
+          name: card.name,
+        }));
+        payload.split = [...receipt];
+        return console.log(payload);
+      }
+      return console.log("failure");
+    }
   };
 
   return (
     <div>
-      <NavBar />
+      <NavBar typeOption={{ label: "Splits", href: "/splits" }} main={true} />
       <BillSetter
         cards={cards}
         setCards={setCards}
@@ -45,6 +71,9 @@ function MainPage() {
         pendingVal={pendingVal}
         setPendingVal={setPendingVal}
         submitSplit={submitSplit}
+        split={split}
+        setSplit={setSplit}
+        r_isValid={r_isValid}
       />
       <hr />
       <div className="splitter-cards">

@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { useAuth0 } from "../react-auth0-spa";
 
 function Splitter(props) {
+  const { isAuthenticated } = useAuth0();
   const handleDelete = (e) => {
     const curr_id = props.card.id_key;
     const newCards = [...props.cards.filter((card) => card.id_key !== curr_id)];
@@ -18,6 +20,7 @@ function Splitter(props) {
             variant="danger"
             className="delete-btn"
             onClick={handleDelete}
+            disabled={!isAuthenticated}
           >
             x
           </Button>

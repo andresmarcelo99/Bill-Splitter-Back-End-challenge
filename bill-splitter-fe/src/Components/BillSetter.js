@@ -10,7 +10,6 @@ import {
 import { useAuth0 } from "../react-auth0-spa";
 
 function BillSetter(props) {
-  const [split, setSplit] = useState(false);
   const { isAuthenticated } = useAuth0();
   const [isValid, setValidation] = useState(true);
 
@@ -34,13 +33,13 @@ function BillSetter(props) {
             props.setPendingVal(currPending);
             console.log(props.pendingVal);
 
-            return setSplit(true);
+            return props.setSplit(true);
           }
         }
         const toPayEach = (props.bill + props.bill * 0.15) / props.cards.length;
         props.setBillEach(toPayEach);
 
-        return setSplit(true);
+        return props.setSplit(true);
       }
     }
     console.log("bill empty");
@@ -53,6 +52,12 @@ function BillSetter(props) {
         <Form.Group controlId="formBasicCost">
           <Form.Label className="splitter-label-header">Bill amount</Form.Label>
           <div>
+            {!props.r_isValid && (
+              <Form.Label className="splitter-label-header-warning">
+                Remaining must be at 0 before saving
+              </Form.Label>
+            )}
+
             {!isValid && (
               <Form.Label className="splitter-label-header-warning">
                 Please enter the bill and each card field
@@ -151,9 +156,19 @@ function BillSetter(props) {
                   </span>
                 )}
                 {isAuthenticated && (
-                  <Button className="split-btn" onClick={props.submitSplit}>
-                    Save
-                  </Button>
+                  <OverlayTrigger
+                    key="bottom"
+                    placement="bottom"
+                    overlay={
+                      <Tooltip id={`tooltip-bottom`}>
+                        Before saving make sure to split the bill first
+                      </Tooltip>
+                    }
+                  >
+                    <Button className="split-btn" onClick={props.submitSplit}>
+                      Save
+                    </Button>
+                  </OverlayTrigger>
                 )}
               </Form.Group>
             </Col>
@@ -161,12 +176,10 @@ function BillSetter(props) {
         </fieldset>
 
         <div style={{ color: "rgba(0, 0, 0, 0.7)" }}>
-          {`Subtotal: ${props.bill}`}
+          {`Subtotal: $${props.bill}`}
         </div>
         <Form.Group style={{ color: "#242582", fontWeight: "500" }}>
-          <Form.Label>
-            {`Total(isv): ${props.bill + props.bill * 0.15}`}
-          </Form.Label>
+          <Form.Label>{`Total: $${props.bill + props.bill * 0.15}`}</Form.Label>
           <Form.Text
             className="text-muted"
             style={{ marginTop: "-5px", fontWeigth: "300" }}
@@ -174,8 +187,12 @@ function BillSetter(props) {
             ISV is already included on total.
           </Form.Text>
         </Form.Group>
-        <div>{!props.equalAmount && `Remaining: ${props.pendingVal}`}</div>
-        {split && props.equalAmount && (
+        <div>
+          {!props.equalAmount &&
+            props.pendingVal !== undefined &&
+            `Remaining: $${props.pendingVal}`}
+        </div>
+        {props.split && props.equalAmount && (
           <div>
             {props.cards.map((card) => (
               <li key={card.id_key}>{`${card.name}, to pay:${(
@@ -185,7 +202,7 @@ function BillSetter(props) {
             ))}
           </div>
         )}
-        {split && !props.equalAmount && (
+        {props.split && !props.equalAmount && (
           <div>
             {props.cards
               .filter((card) => card.amount > 0)

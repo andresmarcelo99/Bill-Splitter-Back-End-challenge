@@ -3,7 +3,7 @@ import { Navbar, Nav, Button } from "react-bootstrap";
 
 import { useAuth0 } from "../react-auth0-spa";
 
-function NavBar() {
+function NavBar(props) {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
@@ -24,17 +24,15 @@ function NavBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
+          {props.main && (
+            <Nav>
+              <Nav.Link href="/">New Slate</Nav.Link>
+            </Nav>
+          )}
           <Nav>
-            <Nav.Link href="/">New Slate</Nav.Link>
-          </Nav>
-          {/* <Nav>
-            <Nav.Link href="/external-api">External API</Nav.Link>
-          </Nav> */}
-
-          <Nav>
-            <Nav.Link href="/splits">
+            <Nav.Link href={props.typeOption.href}>
               <Button variant="link" className="splits-link-btn">
-                Splits
+                {props.typeOption.label}
               </Button>
             </Nav.Link>
             <Nav.Link eventKey={2}>
