@@ -22,29 +22,30 @@ function BillSetter(props) {
       let pending = [...props.cards].filter((card) => card.amount > 0);
       if (pending.length > 0) {
         pending = pending.reduce((a, b) => ({ amount: a.amount + b.amount }));
-        const currPending = props.bill - pending.amount;
+        const currPending = props.bill + props.bill * 0.15 - pending.amount;
         props.setPendingVal(currPending);
         console.log(props.pendingVal);
         return setSplit(true);
       }
-      return setSplit(true);
     }
-    const toPayEach = props.bill / props.cards.length;
+    const toPayEach = (props.bill + props.bill * 0.15) / props.cards.length;
     props.setBillEach(toPayEach);
     return setSplit(true);
   };
 
   return (
     <div className="bill-setter-div">
-      <Form onSubmit={props.onSubmit} className="bill-setter-form">
+      <Form onSubmit={(e) => e.preventDefault()} className="bill-setter-form">
         <Form.Group controlId="formBasicCost">
-          <Form.Label className="splitter-labels">Bill</Form.Label>
+          <Form.Label className="splitter-label-header">Bill amount</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter bill"
             name="bill"
             onChange={(e) => {
-              props.setPendingVal(parseInt(e.target.value));
+              props.setPendingVal(
+                parseInt(e.target.value) + parseInt(e.target.value) * 0.15
+              );
               return props.setBill(parseInt(e.target.value));
             }}
           />
@@ -112,17 +113,28 @@ function BillSetter(props) {
           </Row>
         </fieldset>
 
-        <div>
-          {`To cover: ${props.bill}`}
-          {!props.equalAmount && `, Left: ${props.pendingVal}`}
+        <div style={{ color: "rgba(0, 0, 0, 0.7)" }}>
+          {`Subtotal: ${props.bill}`}
         </div>
-
+        <Form.Group style={{ color: "#242582", fontWeight: "500" }}>
+          <Form.Label>
+            {`Total(isv): ${props.bill + props.bill * 0.15}`}
+          </Form.Label>
+          <Form.Text
+            className="text-muted"
+            style={{ marginTop: "-5px", fontWeigth: "300" }}
+          >
+            ISV is already included on total.
+          </Form.Text>
+        </Form.Group>
+        <div>{!props.equalAmount && `Remaining: ${props.pendingVal}`}</div>
         {split && props.equalAmount && (
           <div>
             {props.cards.map((card) => (
-              <li key={card.id_key}>{`${card.name}, to pay:${
-                props.bill / props.cards.length
-              }`}</li>
+              <li key={card.id_key}>{`${card.name}, to pay:${(
+                (props.bill + props.bill * 0.15) /
+                props.cards.length
+              ).toFixed(1)}`}</li>
             ))}
           </div>
         )}
@@ -133,7 +145,7 @@ function BillSetter(props) {
               .map((card) => (
                 <li
                   key={card.id_key}
-                >{`${card.name}, amount to pay:${card.amount}`}</li>
+                >{`${card.name}, amount to pay: ${card.amount}`}</li>
               ))}
           </div>
         )}

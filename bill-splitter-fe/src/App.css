@@ -20,12 +20,9 @@
   background: #f64c72;
   border-color: #f64c72;
 }
-
-.bill-setter-div {
-}
-
 .delete-btn {
   float: right;
+  margin-bottom: 1em;
 }
 
 .bill-setter-form {
@@ -89,15 +86,15 @@
   margin-top: 2em;
 }
 
-.splitter-labels {
-  font-size: 3.5vh;
-  font-weight: 400;
+.splitter-label-header {
+  font-size: 5vh;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 768px) {
   .splitter-form {
-    margin-top: 5vh;
-    min-width: 95%;
+    margin-top: 3vh;
+
     margin-left: auto;
     margin-right: auto;
   }

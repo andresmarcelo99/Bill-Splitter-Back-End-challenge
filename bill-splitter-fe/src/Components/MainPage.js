@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 import { useAuth0 } from "../react-auth0-spa";

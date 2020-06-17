@@ -10,7 +10,7 @@ function Splitter(props) {
 
   return (
     <div className="splits-div-card">
-      <Form className="splitter-form">
+      <Form onSubmit={(e) => e.preventDefault()} className="splitter-form">
         <span>
           <Button
             // type="submit"
