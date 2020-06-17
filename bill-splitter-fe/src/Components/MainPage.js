@@ -8,15 +8,26 @@ import Splitter from "./Splitter";
 import BillSetter from "./BillSetter";
 
 function MainPage() {
+  const { isAuthenticated, user, getTokenSilently } = useAuth0();
   const [cards, setCards] = useState([
     { id_key: uuidv4(), name: "", amount: 0 },
   ]);
-  const { isAuthenticated } = useAuth0();
   const [equalAmount, setTypeAmount] = useState(true);
   const [bill, setBill] = useState(0);
   const [persons, setPersons] = useState([]);
   const [billEach, setBillEach] = useState(0);
   const [pendingVal, setPendingVal] = useState(0);
+
+  const submitSplit = async () => {
+    const payload = {
+      name: user.nickname,
+      email: user.name,
+      token: await getTokenSilently(),
+      split: bill,
+    };
+
+    console.log(payload);
+  };
 
   return (
     <div>
@@ -32,6 +43,7 @@ function MainPage() {
         setBillEach={setBillEach}
         pendingVal={pendingVal}
         setPendingVal={setPendingVal}
+        submitSplit={submitSplit}
       />
       <hr />
       <div className="splitter-cards">

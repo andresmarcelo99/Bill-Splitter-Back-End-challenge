@@ -27,7 +27,7 @@
 
 .bill-setter-form {
   margin: 1em auto;
-  width: 70%;
+  width: 84%;
 }
 .amount-settings-checks {
   width: 50%;
@@ -94,8 +94,12 @@
 @media only screen and (max-width: 768px) {
   .splitter-form {
     margin-top: 3vh;
-
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .bill-setter-form {
+    margin: 1em auto;
+    width: 90%;
   }
 }

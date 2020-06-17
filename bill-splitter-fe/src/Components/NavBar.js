@@ -27,8 +27,12 @@ function NavBar() {
           <Nav>
             <Nav.Link href="/">New Slate</Nav.Link>
           </Nav>
+          {/* <Nav>
+            <Nav.Link href="/external-api">External API</Nav.Link>
+          </Nav> */}
+
           <Nav>
-            <Nav.Link href="/test">
+            <Nav.Link href="/splits">
               <Button variant="link" className="splits-link-btn">
                 Splits
               </Button>

@@ -15,7 +15,6 @@ function BillSetter(props) {
 
   const divideBill = () => {
     props.setPendingVal(props.bill);
-    console.log(props.cards);
 
     if (!props.equalAmount) {
       props.setCards([...props.cards]);
@@ -25,11 +24,13 @@ function BillSetter(props) {
         const currPending = props.bill + props.bill * 0.15 - pending.amount;
         props.setPendingVal(currPending);
         console.log(props.pendingVal);
+
         return setSplit(true);
       }
     }
     const toPayEach = (props.bill + props.bill * 0.15) / props.cards.length;
     props.setBillEach(toPayEach);
+
     return setSplit(true);
   };
 
@@ -57,6 +58,7 @@ function BillSetter(props) {
               <Form.Group>
                 <Form.Check
                   className="amount-settings-checks"
+                  style={{ marginBottom: "1em" }}
                   type="radio"
                   label="Equal Parts"
                   name="formHorizontalRadios"
@@ -106,6 +108,31 @@ function BillSetter(props) {
                 {isAuthenticated && (
                   <Button className="split-btn" onClick={divideBill}>
                     Split
+                  </Button>
+                )}
+              </Form.Group>
+              <Form.Group
+                style={{
+                  textAlign: "right",
+                  marginRight: "1em",
+                  marginTop: "0.4em",
+                }}
+              >
+                {!isAuthenticated && (
+                  <span className="d-inline-block">
+                    <Button
+                      style={{ pointerEvents: "none" }}
+                      className="split-btn"
+                      onClick={props.submitSplit}
+                      disabled={!isAuthenticated}
+                    >
+                      Split
+                    </Button>
+                  </span>
+                )}
+                {isAuthenticated && (
+                  <Button className="split-btn" onClick={props.submitSplit}>
+                    Save
                   </Button>
                 )}
               </Form.Group>

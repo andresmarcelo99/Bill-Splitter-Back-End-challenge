@@ -1,4 +1,5 @@
 {
   "domain": "dev-en69qxgm.auth0.com",
-  "clientId": "WDeRe0mTa8oQ8oyvBa4GSLZL5cCH0npl"
+  "clientId": "WDeRe0mTa8oQ8oyvBa4GSLZL5cCH0npl",
+  "audience": "https://bill-splitter-api.com"
 }
