@@ -10,20 +10,21 @@ import BillSetter from "./BillSetter";
 function MainPage() {
   const { isAuthenticated, user, getTokenSilently } = useAuth0();
   const [cards, setCards] = useState([
-    { id_key: uuidv4(), name: "", amount: 0 },
+    { id_key: uuidv4(), name: "", amount: 0, item: "" },
   ]);
   const [equalAmount, setTypeAmount] = useState(true);
   const [bill, setBill] = useState(0);
   const [persons, setPersons] = useState([]);
   const [billEach, setBillEach] = useState(0);
   const [pendingVal, setPendingVal] = useState(0);
+  const [receipt, setReceipt] = useState({});
 
   const submitSplit = async () => {
     const payload = {
       name: user.nickname,
       email: user.name,
       token: await getTokenSilently(),
-      split: bill,
+      split: {},
     };
 
     console.log(payload);
@@ -70,7 +71,7 @@ function MainPage() {
             console.log(cards);
             return setCards([
               ...cards,
-              { id_key: newKey, name: "", amount: 0 },
+              { id_key: newKey, name: "", amount: 0, item: "" },
             ]);
           }}
         >

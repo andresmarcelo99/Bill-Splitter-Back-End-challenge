@@ -34,19 +34,33 @@ function Splitter(props) {
         </Form.Group>
 
         {!props.typeAmount && (
-          <Form.Group className="splitter-form-group" controlId="formBasicTip">
-            <Form.Label className="splitter-labels">Amount</Form.Label>
-            <Form.Control
-              onChange={(e) => {
-                const isNum = /^\d+$/.test(e.target.value);
-                if (isNum)
-                  return (props.card.amount = parseInt(e.target.value));
-              }}
-              type="text"
-              placeholder="Enter amount"
-              name="amount"
-            />
-          </Form.Group>
+          <div>
+            <Form.Group controlId="formBasicCost">
+              <Form.Label className="splitter-labels">Item</Form.Label>
+              <Form.Control
+                onChange={(e) => (props.card.item = e.target.value)}
+                type="text"
+                placeholder="Enter name"
+                name="name"
+              />
+            </Form.Group>
+            <Form.Group
+              className="splitter-form-group"
+              controlId="formBasicTip"
+            >
+              <Form.Label className="splitter-labels">Amount</Form.Label>
+              <Form.Control
+                onChange={(e) => {
+                  const isNum = /^\d+$/.test(e.target.value);
+                  if (isNum)
+                    return (props.card.amount = parseInt(e.target.value));
+                }}
+                type="text"
+                placeholder="Enter amount"
+                name="amount"
+              />
+            </Form.Group>
+          </div>
         )}
       </Form>
     </div>

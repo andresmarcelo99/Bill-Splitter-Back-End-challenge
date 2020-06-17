@@ -12,26 +12,39 @@ import { useAuth0 } from "../react-auth0-spa";
 function BillSetter(props) {
   const [split, setSplit] = useState(false);
   const { isAuthenticated } = useAuth0();
+  const [isValid, setValidation] = useState(true);
 
   const divideBill = () => {
     props.setPendingVal(props.bill);
+    console.log(props.cards);
+    if (props.bill > 0) {
+      const validate = [...props.cards].filter((card) => card.name === "");
+      if (validate.length > 0) {
+        setValidation(false);
+      } else {
+        setValidation(true);
+        if (!props.equalAmount) {
+          props.setCards([...props.cards]);
+          let pending = [...props.cards].filter((card) => card.amount > 0);
+          if (pending.length > 0) {
+            pending = pending.reduce((a, b) => ({
+              amount: a.amount + b.amount,
+            }));
+            const currPending = props.bill + props.bill * 0.15 - pending.amount;
+            props.setPendingVal(currPending);
+            console.log(props.pendingVal);
 
-    if (!props.equalAmount) {
-      props.setCards([...props.cards]);
-      let pending = [...props.cards].filter((card) => card.amount > 0);
-      if (pending.length > 0) {
-        pending = pending.reduce((a, b) => ({ amount: a.amount + b.amount }));
-        const currPending = props.bill + props.bill * 0.15 - pending.amount;
-        props.setPendingVal(currPending);
-        console.log(props.pendingVal);
+            return setSplit(true);
+          }
+        }
+        const toPayEach = (props.bill + props.bill * 0.15) / props.cards.length;
+        props.setBillEach(toPayEach);
 
         return setSplit(true);
       }
     }
-    const toPayEach = (props.bill + props.bill * 0.15) / props.cards.length;
-    props.setBillEach(toPayEach);
-
-    return setSplit(true);
+    console.log("bill empty");
+    return setValidation(false);
   };
 
   return (
@@ -39,6 +52,13 @@ function BillSetter(props) {
       <Form onSubmit={(e) => e.preventDefault()} className="bill-setter-form">
         <Form.Group controlId="formBasicCost">
           <Form.Label className="splitter-label-header">Bill amount</Form.Label>
+          <div>
+            {!isValid && (
+              <Form.Label className="splitter-label-header-warning">
+                Please enter the bill and each card field
+              </Form.Label>
+            )}
+          </div>
           <Form.Control
             type="text"
             placeholder="Enter bill"
@@ -170,9 +190,9 @@ function BillSetter(props) {
             {props.cards
               .filter((card) => card.amount > 0)
               .map((card) => (
-                <li
-                  key={card.id_key}
-                >{`${card.name}, amount to pay: ${card.amount}`}</li>
+                <li key={card.id_key}>
+                  {`${card.name}, ${card.item} : ${card.amount}`}$
+                </li>
               ))}
           </div>
         )}
