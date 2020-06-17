@@ -22,6 +22,19 @@ function MainPage() {
   const [split, setSplit] = useState(false);
   const [isValid, setValidation] = useState(true);
 
+  const submitReq = (payload) => {
+    getTokenSilently().then((res) => {
+      axios
+        .post("http://localhost:5000/users", payload, {
+          headers: { Authorization: `Bearer ${res}` },
+        })
+        .then((res) => {
+          return console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    });
+  };
+
   const submitSplit = async () => {
     const payload = {
       name: user.nickname,
@@ -39,7 +52,8 @@ function MainPage() {
         }));
         payload.split = [...receipt];
         console.log(payload);
-        return setR_isvalid(true);
+        setR_isvalid(true);
+        return submitReq(payload);
       }
       console.log("Remaining must be 0");
       return setR_isvalid(false);
@@ -50,7 +64,8 @@ function MainPage() {
           name: card.name,
         }));
         payload.split = [...receipt];
-        return console.log(payload);
+        console.log(payload);
+        return submitReq(payload);
       }
       return console.log("failure");
     }

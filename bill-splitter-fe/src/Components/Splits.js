@@ -12,7 +12,7 @@ function Splits() {
   useEffect(() => {
     getTokenSilently().then((res) => {
       axios
-        .get("http://localhost:5000/users/mark@gmail.com", {
+        .get(`http://localhost:5000/users/${user.name}`, {
           headers: { Authorization: `Bearer ${res}` },
         })
         .then((res) => {
