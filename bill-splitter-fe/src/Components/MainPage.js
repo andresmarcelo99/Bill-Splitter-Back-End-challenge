@@ -21,6 +21,7 @@ function MainPage() {
   const [r_isValid, setR_isvalid] = useState(true);
   const [split, setSplit] = useState(false);
   const [isValid, setValidation] = useState(true);
+  const [save, setSave] = useState(false);
 
   const submitReq = (payload) => {
     getTokenSilently().then((res) => {
@@ -36,43 +37,48 @@ function MainPage() {
   };
 
   const submitSplit = async () => {
-    const payload = {
-      name: user.nickname,
-      email: user.name,
-      token: await getTokenSilently(),
-      split: [],
-    };
+    if (!save) {
+      const payload = {
+        name: user.nickname,
+        email: user.name,
+        token: await getTokenSilently(),
+        split: [],
+      };
 
-    if (!equalAmount) {
-      if (pendingVal > -1 && pendingVal < 1) {
-        let receipt = [...cards].map((card) => ({
-          amount: card.amount,
-          item: card.item,
-          name: card.name,
-        }));
-        payload.split = JSON.stringify(receipt);
-        const splitStr = receipt.toString();
-        console.log("STRINGG " + splitStr);
-        console.log(payload);
-        setR_isvalid(true);
-        return submitReq(payload);
+      if (!equalAmount) {
+        if (pendingVal > -1 && pendingVal < 1) {
+          let receipt = [...cards].map((card) => ({
+            amount: card.amount,
+            item: card.item,
+            name: card.name,
+          }));
+          payload.split = JSON.stringify(receipt);
+          const splitStr = receipt.toString();
+          console.log("STRINGG " + splitStr);
+          console.log(payload);
+          setSave(true);
+          setR_isvalid(true);
+          return submitReq(payload);
+        }
+        console.log("Remaining must be 0");
+        return setR_isvalid(false);
+      } else {
+        if (split && isValid) {
+          let receipt = [...cards].map((card) => ({
+            amount: (bill * 0.15 + bill) / cards.length,
+            name: card.name,
+          }));
+          payload.split = JSON.stringify(receipt);
+          const splitStr = JSON.stringify(receipt);
+          console.log("STRINGG " + splitStr);
+          console.log(payload);
+          setSave(true);
+          return submitReq(payload);
+        }
+        return console.log("failure");
       }
-      console.log("Remaining must be 0");
-      return setR_isvalid(false);
-    } else {
-      if (split && isValid) {
-        let receipt = [...cards].map((card) => ({
-          amount: (bill * 0.15 + bill) / cards.length,
-          name: card.name,
-        }));
-        payload.split = JSON.stringify(receipt);
-        const splitStr = JSON.stringify(receipt);
-        console.log("STRINGG " + splitStr);
-        console.log(payload);
-        return submitReq(payload);
-      }
-      return console.log("failure");
     }
+    return console.log("already saved");
   };
 
   return (
