@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 import NavBar from "./NavBar";
@@ -11,7 +12,7 @@ function Splits() {
   useEffect(() => {
     getTokenSilently().then((res) => {
       axios
-        .get(`http://localhost:5000/users/${user.name}`, {
+        .get(`https://mg-bill-splitter-api.herokuapp.com/users/${user.name}`, {
           headers: { Authorization: `Bearer ${res}` },
         })
         .then((res) => {
@@ -33,12 +34,16 @@ function Splits() {
               key={data.id}
             >
               <span className="split-list-label">Split:</span>
-              <p>
-                {/* {data.split.map((k) => (
-                  <li>k</li>
-                ))} */}
-                {data.split}
-              </p>
+              {console.log(data.split.replace(/[\[\] {} "]+/g, "").split(","))}
+              <ul>
+                {JSON.parse(data.split).map((split) => (
+                  <li style={{ listStyle: "none" }} key={uuidv4()}>
+                    {`${split.name}, `}
+                    {split.item && `item: ${split.item}, `}
+                    {`amount: ${split.amount}`}
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

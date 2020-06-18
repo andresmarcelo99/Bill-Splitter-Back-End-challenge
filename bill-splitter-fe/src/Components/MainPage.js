@@ -25,7 +25,7 @@ function MainPage() {
   const submitReq = (payload) => {
     getTokenSilently().then((res) => {
       axios
-        .post("http://localhost:5000/users", payload, {
+        .post("https://mg-bill-splitter-api.herokuapp.com/users", payload, {
           headers: { Authorization: `Bearer ${res}` },
         })
         .then((res) => {
