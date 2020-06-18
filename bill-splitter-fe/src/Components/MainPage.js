@@ -50,7 +50,9 @@ function MainPage() {
           item: card.item,
           name: card.name,
         }));
-        payload.split = [...receipt];
+        payload.split = JSON.stringify(receipt);
+        const splitStr = receipt.toString();
+        console.log("STRINGG " + splitStr);
         console.log(payload);
         setR_isvalid(true);
         return submitReq(payload);
@@ -63,7 +65,9 @@ function MainPage() {
           amount: (bill * 0.15 + bill) / cards.length,
           name: card.name,
         }));
-        payload.split = [...receipt];
+        payload.split = JSON.stringify(receipt);
+        const splitStr = JSON.stringify(receipt);
+        console.log("STRINGG " + splitStr);
         console.log(payload);
         return submitReq(payload);
       }

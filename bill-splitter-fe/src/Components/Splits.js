@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 function Splits() {
   const [split_data, setData] = useState([]);
   const { user, getTokenSilently } = useAuth0();
-  const [token, setToken] = useState(0);
 
   useEffect(() => {
     getTokenSilently().then((res) => {
@@ -26,10 +25,23 @@ function Splits() {
   return (
     <div>
       <NavBar typeOption={{ label: "Home", href: "/" }} />
-      <div>
-        {split_data.map((data) => (
-          <li key={data.id}>Split: ${data.split}</li>
-        ))}
+      <div className="splits-list">
+        <ul>
+          {split_data.map((data) => (
+            <li
+              style={{ listStyle: "none", textAlign: "justify" }}
+              key={data.id}
+            >
+              <span className="split-list-label">Split:</span>
+              <p>
+                {/* {data.split.map((k) => (
+                  <li>k</li>
+                ))} */}
+                {data.split}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

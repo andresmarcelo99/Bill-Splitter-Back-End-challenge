@@ -95,6 +95,21 @@
   color: red;
 }
 
+.splits-list {
+  width: 80%;
+  text-align: center;
+  padding: 1em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.split-list-label {
+  font-size: 4vh;
+  font-weight: 500;
+}
+
 @media only screen and (max-width: 768px) {
   .splitter-form {
     margin-top: 3vh;
@@ -105,5 +120,13 @@
   .bill-setter-form {
     margin: 1em auto;
     width: 90%;
+  }
+
+  .splits-list {
+    overflow-wrap: break-word;
+    width: 90%;
+    font-size: 2vh;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
