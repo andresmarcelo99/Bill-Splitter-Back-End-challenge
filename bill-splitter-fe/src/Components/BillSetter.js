@@ -151,7 +151,7 @@ function BillSetter(props) {
                       onClick={props.submitSplit}
                       disabled={!isAuthenticated}
                     >
-                      Split
+                      Save
                     </Button>
                   </span>
                 )}
